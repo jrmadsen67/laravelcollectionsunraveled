@@ -1,0 +1,13 @@
+# Why this "ePamphlet"?
+
+"Laravel Collections are *fantastic*!" I constantly read this tweeted - and couldn't agree more. More than 5 dozen useful functions that you might otherwise have to write out yourself - 5 dozen *tested* functions, important to say - all chainable, documented and ready to make your life easier. 
+
+But why write an eBook about it? (I jokingly call it an "ePamphlet" because of its length, but I suppose eBook is the proper term). Several reasons, actually.
+
+Remember the early days of learning your first programming language? You spent so much time coming up with an algorithm to solve your problem - and then the instructor would put his solution up on the overhead (are you old enough to remember "overheads"?) complete with BuiltInLanguageFunctionThatSolvesThisProblem()? How you cried, "Unfair! How am I supposed to know that even *exists*?"
+
+Well, you know it exists by studying the source code. That's what we are going to do. In the process, we're going to perhaps improve our basic php skills a bit by getting more familiar with ArrayObjects, CachingIterators, IteratorAggregates and some other handy tools. We're going to not just read through the list of available methods, but come up with some practical examples of when they might be useful to us.
+
+All that seemed too long to write a blog post about, and I find that serial tutorials never really sink in with me personally. Hopefully this will prove useful enough that you'll keep it handy as a reference item while working and internalizing the contents. As an eBook I can continually improve the examples and let you know when better content is available, or when a new version of Laravel introduces more functionality.
+
+So...let's jump in!
