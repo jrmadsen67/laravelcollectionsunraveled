@@ -1,6 +1,6 @@
 # Why this "ePamphlet"?
 
-"Laravel Collections are *fantastic*!" I constantly read this tweeted - and couldn't agree more. More than five dozen useful functions that you might otherwise have to write out yourself - five dozen *tested* functions, important to say - all chainable, documented and ready to make your life easier. 
+"Laravel Collections are *fantastic*!" I constantly read this tweeted - and couldn't agree more. More than five dozen useful functions that you might otherwise have to write out yourself - five dozen *tested* functions, important to say - all chain-able, documented and ready to make your life easier. 
 
 But why write an eBook about it? (I jokingly call it an "ePamphlet" because of its length, but I suppose eBook is the proper term). 
 
