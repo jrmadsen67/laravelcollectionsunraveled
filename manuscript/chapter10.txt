@@ -1,0 +1,1 @@
+# Support collections vs. Eloquent collections

@@ -1,1 +1,42 @@
-# Support collections vs. Eloquent collections
+# The functions
+
+Let's get into the meat of the subject with the actual functions of the Collection object. I'm going to break them in several arbitrary groups that I think will help us remember what they do ...
+
+#Array Mimicking#
+These first few you might almost think of as "magic function". They are part of the actual construction of the object and not something most people even think about. Do you remember our ArrayAccess we are implementing as a base for this object? This is what makes it all meet the requirements of that interface, and allow it to all work like an array.
+
+It is unlikely you'll ever use these functions directly, unless you wish to inherit from the Collection class for some reason.
+
+__construct($items = [])
+offsetExists($key)
+offsetGet($key)
+offsetSet($key, $value)
+offsetUnset($key)
+
+These functions work just like their native php counterparts, but as class functions. This means
+
+ `$users->offsetExists(3)` gives the same result as `array_key_exists(3, $users)`
+
+Function offsetSet($key, $value) can work two ways: 
+
+`$collection->offsetSet(3, 200);`
+
+will *replace* the key value at position 3; 
+
+`$collection->offsetSet(null, 200);`
+
+will act just like `$collection[] = 200;` and add a new element on the end. 
+
+One last "deep dive" into this area - the __construct. Notice that the __construct likes to start with an array. If you look in the source code, however, you'll see that if it *doesn't* get an array, it will call `getArrayableItems($items)`. This will cast Arrayables, Json objects, or even *other Collections* as an array. Furthermore, anything that *can* be cast as an array *will be* - but not always with the result you were thinking:
+
+`$collection = collect(11,12,13,14,15);`
+
+results in:
+
+Collection {#160 ▼
+  #items: array:1 [▼
+    0 => 11
+  ]
+}
+
+

@@ -1,1 +1,10 @@
-# The functions
+# Array Mechanics
+
+Used to format, transform or otherwise manipulate the structure of the $items. I'm putting caching in here, as well.
+
+toArray()
+jsonSerialize()
+toJson($options = 0)
+getIterator()
+getCachingIterator($flags = CachingIterator::CALL_TOSTRING)
+__toString()

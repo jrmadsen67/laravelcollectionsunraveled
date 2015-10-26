@@ -1,0 +1,26 @@
+# Array Wrappers
+
+This group generally imitates functions that exist in the PHP language itself.
+
+flip()
+keys()
+pop()
+push($value)
+pull($key, $default = null)
+put($key, $value)
+reduce(callable $callback, $initial = null)
+reverse()
+search($value, $strict = false)
+shift()
+slice($offset, $length = null, $preserveKeys = false)
+chunk($size, $preserveKeys = false)
+splice($offset, $length = null, $replacement = [])
+sum($callback = null)
+map(callable $callback)
+max($key = null)
+merge($items)
+min($key = null)
+implode($value, $glue = null)
+intersect($items)
+values()
+count()

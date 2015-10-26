@@ -1,0 +1,6 @@
+# Ways to sort
+
+shuffle()
+sort(callable $callback = null)
+sortBy($callback, $options = SORT_REGULAR, $descending = false)
+sortByDesc($callback, $options = SORT_REGULAR)
