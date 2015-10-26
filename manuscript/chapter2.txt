@@ -1,8 +1,7 @@
-# The functions
+# Array Mimicking
 
 Let's get into the meat of the subject with the actual functions of the Collection object. I'm going to break them in several arbitrary groups that I think will help us remember what they do ...
 
-#Array Mimicking#
 These first few you might almost think of as "magic function". They are part of the actual construction of the object and not something most people even think about. Do you remember our ArrayAccess we are implementing as a base for this object? This is what makes it all meet the requirements of that interface, and allow it to all work like an array.
 
 It is unlikely you'll ever use these functions directly, unless you wish to inherit from the Collection class for some reason.
