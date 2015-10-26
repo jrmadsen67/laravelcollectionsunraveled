@@ -7,9 +7,13 @@ These first few you might almost think of as "magic function". They are part of 
 It is unlikely you'll ever use these functions directly, unless you wish to inherit from the Collection class for some reason.
 
 __construct($items = [])
+
 offsetExists($key)
+
 offsetGet($key)
+
 offsetSet($key, $value)
+
 offsetUnset($key)
 
 These functions work just like their native php counterparts, but as class functions. This means
@@ -32,10 +36,10 @@ One last "deep dive" into this area - the __construct. Notice that the __constru
 
 results in:
 
-Collection {#160 ▼
+`Collection {#160 ▼
   #items: array:1 [▼
     0 => 11
   ]
-}
+}`
 
 
