@@ -7,19 +7,23 @@ These first few you might almost think of as "magic function". They are part of 
 It is unlikely you'll ever use these functions directly, unless you wish to inherit from the Collection class for some reason.
 
 
-`__construct($items = [])
+`__construct($items = [])`
 
-offsetExists($key)
+`offsetExists($key)`
 
-offsetGet($key)
+`offsetGet($key)`
 
-offsetSet($key, $value)
+`offsetSet($key, $value)`
 
-offsetUnset($key)`
+`offsetUnset($key)`
 
 These functions work just like their native php counterparts, but as class functions. This means
 
- `$users->offsetExists(3)` gives the same result as `array_key_exists(3, $users)`
+ `$users->offsetExists(3)` 
+
+gives the same result as 
+
+`array_key_exists(3, $users)`
 
 Function offsetSet($key, $value) can work two ways: 
 
