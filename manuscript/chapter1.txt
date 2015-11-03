@@ -16,7 +16,7 @@ Finally, we have JsonSerializable and Laravel's own Arrayable and Jsonable. Thes
 
 So what do we have at this point? Our own custom ArrayObject class that allows array-like access to items (corresponding to elements in an actual array), can add and remove items, can count how many items it holds, can traverse those items, and can return those items in array or json format. Notice, also, that these items are stored and operated on internally as an array. 
 
-One thing we do NOT have, however - a resultset. People often comment on my Collections tips, asking "why not just use a WHERE clause" or other sql solutions. That might be a better solution under certain circumstances, but a Collection does not assume this is a database resultset. In addition, you may not even have access to the actual sql, such as when parsing an expensive API response. So these methods should be looked at in a wider context.  
+One thing we do NOT have, however - is a resultset. People often comment on my Collections tips, asking "why not just use a WHERE clause" or other sql solutions. That might be a better solution under certain circumstances, but a Collection is not just a fancy wrapper for a database resultset. You may not even have access to the actual sql, such as when parsing an expensive API response, or you may wish to use these functions for your own internal data processing. So these methods should be looked at in a wider context.  
 
 Now we are ready to start looking at the class functions.
 
