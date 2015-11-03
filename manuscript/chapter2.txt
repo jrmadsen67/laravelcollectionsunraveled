@@ -33,7 +33,11 @@ will *replace* the key value at position 3;
 
 `$collection->offsetSet(null, 200);`
 
-will act just like `$collection[] = 200;` and add a new element on the end. 
+will act just like 
+
+`$collection[] = 200;` 
+
+and add a new element on the end. 
 
 One last "deep dive" into this area - the __construct. Notice that the __construct likes to start with an array. If you look in the source code, however, you'll see that if it *doesn't* get an array, it will call `getArrayableItems($items)`. This will cast Arrayables, Json objects, or even *other Collections* as an array. Furthermore, anything that *can* be cast as an array *will be* - but not always with the result you were thinking:
 
@@ -41,10 +45,10 @@ One last "deep dive" into this area - the __construct. Notice that the __constru
 
 results in:
 
-`Collection {#160 ▼
-  #items: array:1 [▼
+`Collection {#160
+  #items: array:1 [
     0 => 11
   ]
-}`
+}```
 
 
