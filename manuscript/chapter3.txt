@@ -1,10 +1,59 @@
 # Array Mechanics
 
-Used to format, transform or otherwise manipulate the structure of the $items. I'm putting caching in here, as well.
+Used to format, transform or otherwise manipulate the structure of the $items array. I'm putting caching in here, as well.
 
-toArray()
-jsonSerialize()
-toJson($options = 0)
-getIterator()
-getCachingIterator($flags = CachingIterator::CALL_TOSTRING)
-__toString()
+`toArray()` - will transform from a Collection back to a straight array.
+
+`toJson($options = 0)` - transforms the Collection to a json encoded string.
+
+`jsonSerialize()` - a wrapper around toArray(). Making it serializeable. That's it.
+
+We won't linger for long over these functions, but I thought it was a good opportunty to point out something you'll notice a lot in the source and might wonder about. Have a look at the actual function `toJson($options = 0)`:
+
+`    
+public function toJson($options = 0)
+{
+    return json_encode($this->toArray(), $options);
+}`
+
+It's true that this function actual handles two things, first converting to an array and then applying the php fumction json_encode(). A few of the functions don't even do that much - they are simple wrappers around php core functions. Why do that?
+
+Chaining! Laravel is not just about RAD, it is about working in a clean, easy to read and work with manner..."eloquent", if you will. You'll notice a very heavy influence from Ruby on Rails when you work with it for a while. Php loves to wrap functions inside of function inside of functions. Laravel would prefer this:
+
+`$collection = collect([11,12,13,14,15])->shuffle()->toJson();`
+
+You can read it, left to right, like a book. Nice, don't you agree?
+
+Looking at our interator functions, we have 
+
+
+`getIterator()` - Converts the Collection to an ArrayIterator
+
+`getCachingIterator($flags = CachingIterator::CALL_TOSTRING)` - Converts the Collection to a CachingIterator built around an ArrayIterator
+
+Let's take a look the following little code snippet to understand this better, and see an interesting use.
+
+`$collection = collect([11,12,13,14,15])->getCachingIterator();` 
+
+This gives as a CachingIterator, which internally holds an ArrayIterator with the items 11,12,13,14,15. Our CachingIterator is *empty*, but our ArrayIterator is set to the first element. Therefore,
+
+`dump($collection->current());  //yields null` 
+
+`dump($collection->getInnerIterator()->current()); //yields 11, our first element`
+
+You see that because the outer CachingIterator does not cache anything until it has been "called" by the internal iterator, it is always one step behind the ArrayIterator. This lets us "look ahead" in our ArrayIterator to see what is coming next.
+
+Advance one item and see for yourself:
+
+`
+$collection->next();
+
+dump($collection->current());  // yields 11
+
+dump($collection->getInnerIterator()->current()); // yields 12
+
+`
+
+Neat!
+
+That takes us deep into the internals of the Collection class. Let's move toward more familiar ground now with a look at the "Wrapper" Methods.
