@@ -20,7 +20,7 @@ It's true that this function actual handles two things, first converting to an a
 
 Chaining! Laravel is not just about RAD, it is about working in a clean, easy to read and work with manner..."eloquent", if you will. You'll notice a very heavy influence from Ruby on Rails when you work with it for a while. Php loves to wrap functions inside of function inside of functions. Laravel would prefer this:
 
-`$collection = collect([11,12,13])->shuffle()->toJson();`
+`$collection= collect([11,12,13,14,15])->shuffle()->toJson();`
 
 You can read it, left to right, like a book. Nice, don't you agree?
 
@@ -33,9 +33,9 @@ Looking at our interator functions, we have
 
 Let's take a look the following little code snippet to understand this better, and see an interesting use.
 
-`$collection = collect([11,12,13])->getCachingIterator();` 
+`$collection= collect([11,12,13,14,15])->getCachingIterator();` 
 
-This gives as a CachingIterator, which internally holds an ArrayIterator with the items 11,12,13. Our CachingIterator is *empty*, but our ArrayIterator is set to the first element. Therefore,
+This gives as a CachingIterator, which internally holds an ArrayIterator with the items 11,12,13,14,15. Our CachingIterator is *empty*, but our ArrayIterator is set to the first element. Therefore,
 
 `dump($collection->current());  //yields null` 
 
