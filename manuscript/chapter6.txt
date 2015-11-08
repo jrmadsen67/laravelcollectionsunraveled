@@ -1,1 +1,29 @@
 # Ways to filter
+
+has($key)
+contains($key, $value = null)
+isEmpty()
+
+fetch($key)
+first(callable $callback = null, $default = null)
+last(callable $callback = null, $default = null)
+
+get($key, $default = null)
+
+
+filter(callable $callback = null)
+where($key, $value, $strict = true)
+whereLoose($key, $value)
+
+pluck($value, $key = null)
+lists($value, $key = null)
+
+random($amount = 1)
+
+reject($callback)
+
+take($limit)
+
+unique($key = null)
+
+keyBy($keyBy) - acceptes callback

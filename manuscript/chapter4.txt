@@ -1,26 +1,44 @@
 # Array Wrappers
 
-This group generally imitates functions that exist in the PHP language itself.
+I've nicknamed this group the "wrappers" because by and large, they imitate the similarly named functions that exist in the PHP language itself. All of these work internally with the `$items` array that is created when you instantiate the Collection, meaning that they can be strung together in a more readable fashion as `collect([])->someMethod()->someOtherMethod()`. 
 
-flip()
-keys()
-pop()
-push($value)
-pull($key, $default = null)
-put($key, $value)
-reduce(callable $callback, $initial = null)
-reverse()
-search($value, $strict = false)
-shift()
-slice($offset, $length = null, $preserveKeys = false)
-chunk($size, $preserveKeys = false)
-splice($offset, $length = null, $replacement = [])
-sum($callback = null)
-map(callable $callback)
-max($key = null)
-merge($items)
-min($key = null)
-implode($value, $glue = null)
-intersect($items)
-values()
-count()
+Another thing to note with all of the functions that work with finding or extracting certain keys is, they all tend to funnel through an object called Illuminate\\Support\\Arr, using its get() method. If you look at this method, you'll see that this is what lets us use dot notation to access our multi-dimensional array keys in ways you are already familiar:
+
+`$api_key= \Config::get('services.mandrill.secret');`
+
+This is one of the reasons I enjoy working with Collections; after a while you start to see how so much of the Core ties together.
+
+Let's jump into the methods. :
+
+
+flip() - array_flip()
+keys() - array_keys()
+pop()  - array_pop()
+pull($key, $default = null) - Arr::pull()
+prepend($value) - array_unshift()
+reduce(callable $callback, $initial = null) - array_reduce()
+reverse() - array_reverse()
+shift() - array_shift()
+slice($offset, $length = null, $preserveKeys = false) - array_slice()
+chunk($size, $preserveKeys = false) - array_chunk()
+splice($offset, $length = null, $replacement = []) - array_splice()
+map(callable $callback) - array_map()
+merge($items) - array_merge()
+implode($value, $glue = null) - implode()
+intersect($items) - array_intersect()
+values() - array_values()
+count() - count()
+
+push($value) - uses $this->offsetSet(), but key is set to null so always adds to end of the Collection
+put($key, $value) - uses $this->offsetSet() , but key is passed so you can update or add to a particular place in the collection
+
+
+
+
+// These two can be passed a callback function rather than a value
+search($value, $strict = false) 
+sum($callback = null) 
+
+
+max($key = null) - look at more closely
+min($key = null) - look at more closely

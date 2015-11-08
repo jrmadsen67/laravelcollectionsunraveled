@@ -1,0 +1,26 @@
+# Ways to loop, transform and misc. methods
+
+all()
+
+avg($key = null)
+average($key = null)
+
+collapse()
+
+diff($items)
+
+each(callable $callback)
+every($step, $offset = 0)
+
+
+flatten()
+
+forget($keys)
+groupBy($groupBy, $preserveKeys = false)
+
+
+forPage($page, $perPage)
+
+transform(callable $callback)
+
+zip($items)
