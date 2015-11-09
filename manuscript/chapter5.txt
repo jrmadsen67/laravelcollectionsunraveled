@@ -32,7 +32,9 @@ Marketing is infamous for wanting custom sorts and displays. Imagine this array 
 We could use the callback to sort it exactly as they wanted:
 
 `
-$sorted = $collection->sortBy(function ($product, $key) {
+$sorted = $collection->sortBy(function ($product, $key) 
+
+{
 
     return array_search($product['name'], [1=>'Bookcase', 2=>'Desk', 3=>'Chair']);
     
