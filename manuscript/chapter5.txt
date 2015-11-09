@@ -1,6 +1,21 @@
 # Ways to sort
 
-shuffle()
-sort(callable $callback = null)
-sortBy($callback, $options = SORT_REGULAR, $descending = false)
-sortByDesc($callback, $options = SORT_REGULAR)
+This is short chapter, but I think it is good to pull these into their own group and investigate them a little bit. Most of this information is already in the documentation and well-explained, but it's a good opportunity to play with a few more examples to see what creative solutions we can come up with.
+
+`shuffle()`
+
+Shuffle just randomizes your items. It will NOT maintain your keys, but unlike the PHP function, it returns a Collection rather than a boolean, which never made any sense anyway. 
+
+`sort(callable $callback = null)`
+
+`sortBy($callback, $options = SORT_REGULAR, $descending = false)`
+
+`sortByDesc($callback, $options = SORT_REGULAR)`
+
+
+To summarize, the differences we have among the three functions is that `sort()` works with a simple array object to sort on the first-level values, either in the default alphanumerical manner or according to the callback you pass in. A very small note about something that is incorrect in the current documentation - the internal sort uses `uasort()`, not `usort`, and so the keys *are maintained*. This is why in the example they show the results with `$collection->values()->all()`, which is all you need to do if you want a new array of the vlaues only. 
+
+If you need to work with a *subset* of the $items, i.e., a field on the resultset, then you want to go with `sortBy()` and tell it which field to pluck and sort on. Optionally, instead of the field if you pass it a callable (that's to say, the name of a function to use as a callback, or an anonymous function itself) it will work with your own sorting algorithm.
+
+`sortByDesc()` is merely `sortBy()` with the third param set to "true", for convenience when you don't wish to use the second $options argument.
+
