@@ -19,3 +19,24 @@ If you need to work with a *subset* of the $items, i.e., a field on the resultse
 
 `sortByDesc()` is merely `sortBy()` with the third param set to "true", for convenience when you don't wish to use the second $options argument.
 
+There's only so much you can demonstrate with sorting all by itself, so let me leave you with one interesting sort and the promise that we'll visit these again combined with other functions.
+
+Marketing is infamous for wanting custom sorts and displays. Imagine this array was full of item data and they wanted it to show up in a particular order on the page, say Bookcase, Desk, Chair...
+
+`$collection = collect([
+    ['name' => 'Desk'],
+    ['name' => 'Chair'],
+    ['name' => 'Bookcase'],
+]);`
+
+We could use the callback to sort it exactly as they wanted:
+
+`
+$sorted = $collection->sortBy(function ($product, $key) {
+    return array_search($product['name'], [1=>'Bookcase', 2=>'Desk', 3=>'Chair']);
+});
+`
+
+`dump($sorted->values()->all());`
+
+Hopefully that tip was worth the price of admission. On to filters...
