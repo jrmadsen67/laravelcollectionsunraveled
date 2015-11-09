@@ -44,20 +44,38 @@ Likewise, these two functions are ones you might prefer to do in the query when 
 The rest of this list holds no big surprises that I've noticed - they are generally just the array_* version of the native function, written in a clean, chainable fashion to use the internal $items. I'll include them for completeness sake; if you notice anything unusual, let me know and I'll add it in.
 
 `flip() - array_flip()`
+
 `keys() - array_keys()`
+
 `pop()  - array_pop()`
+
 `pull($key, $default = null) - Arr::pull()`
+
 `prepend($value) - array_unshift()`
+
 `reduce(callable $callback, $initial = null) - array_reduce()`
+
 `reverse() - array_reverse()`
+
 `shift() - array_shift()`
+
 `slice($offset, $length = null, $preserveKeys = false) - array_slice()`
+
 `chunk($size, $preserveKeys = false) - array_chunk()`
+
 `splice($offset, $length = null, $replacement = []) - array_splice()`
+
 `map(callable $callback) - array_map()`
+
 `merge($items) - array_merge()`
+
 `intersect($items) - array_intersect()`
+
 `values() - array_values()`
+
 `count() - count()`
+
 `push($value) - uses $this->offsetSet(), but key is set to null so always adds to end of the Collection`
+
 `put($key, $value) - uses $this->offsetSet() , but key is passed so you can update or add to a particular place in the collection`
+
