@@ -59,6 +59,8 @@ The rest of this list holds no big surprises that I've noticed - they are genera
 
 `shift() - array_shift()`
 
+`diff($items)` - array_diff()
+
 `slice($offset, $length = null, $preserveKeys = false) - array_slice()`
 
 `chunk($size, $preserveKeys = false) - array_chunk()`
