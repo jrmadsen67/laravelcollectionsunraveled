@@ -1,0 +1,29 @@
+# Support collections vs. Eloquent collections
+
+Working through these examples you're sure to have noticed a lot of familiar method names from other objects. The Request and Config (actually the Illuminate\\Config\\Repository) are two that should come to mind, but the framework is full of them. However, if you look more closely you'll see that these are nothing more than "cousins" of the Collection - they all implement ArrayAccess and use Illuminate\\Support\\Arr class, but have no tighter relationship than that.
+
+The Eloquent Collection, on the other hand, is a directly inherited class. All of the methods reviewed in this book are available, although a few have been overridden to function slightly differently, as well as some others added that are only available in the child class. To be honest, this can make things rather confusing at times.
+
+We will limit how deeply we get into the Eloquent Collection class (perhaps a second edition of this book will spend more time here), but there are some areas we definitely want to visit if we are going to to fully master Collections.
+
+Our first indication that something is different can be seen with the following experiment:
+
+`     
+$users = App\User::all();
+dump($users->find(2));
+
+$users = collect(App\User::all());
+dump($users->find(2));
+` 
+
+The first `dump()` finds the model we are searching for; the second throws an error since Illuminate\\Support\\Collection::find() doesn't exist. There is no great mystery behind this - Eloquent has its own set of functions and classes, and while we say that `App\User::all()` returns a collection, we really mean the Eloquent Collection subclass is being called. Confusing, though, if you are used to referring to everything as a "collection" without qualification.
+
+While most of the differences are minor and pertain more toward making the collection object work with a group of Eloquent models, there are a few functions that you might want to know about and that are not (currently) documented:
+
+`add()` - this works just as `push()` does, and adds a model onto the end of the collection
+
+`modelKeys()` - this will grab the full set of returned primary keys, either `id` by default or whatever you may have designated in your model.
+
+`only()` and `except()` sound just like the Request object methods of those names, but actually work on the primary keys to filter the models 
+
+`withHidden()` - will include hidden fields in the results
