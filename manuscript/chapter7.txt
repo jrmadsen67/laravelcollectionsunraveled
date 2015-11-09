@@ -2,9 +2,6 @@
 
 all()
 
-avg($key = null)
-average($key = null)
-
 collapse()
 
 diff($items)
