@@ -14,9 +14,9 @@ dump($user1->isEmpty());`
 
 with
 
-`$user2 = App\User:: find([100]);
+`$user2 = App\User:: find([100]);`
 
-dump($user2->isEmpty());`
+`dump($user2->isEmpty());`
 
 The first one should error out on you - the result of $user1 is not a collection. In the second one I used a little trick to force the result to be a collection so we could see it work properly. This is one of the small "gotcha's" developers often come across when they first decide to start using the isEmpty() function. Eloquent will, by default, *not* return a single row result type as a collection (as of v5.1 - this is being discussed and always returning a collection is being considered, so watch this space).
 
