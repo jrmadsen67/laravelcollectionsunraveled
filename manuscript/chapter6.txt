@@ -8,26 +8,23 @@ The first group we'll look at is what I call the "validation" filters. Not reall
 
 isEmpty() is a little bit interesting not so much for the function, which is just a wrapper around `empty($items)`, but for how it is and can be used. First, compare the following (using a User id that doesn't exist):
 
-`
-$user1 = App\User:: find(100);
-dump($user1->isEmpty());
-`
+`$user1 = App\User:: find(100);`
+
+`dump($user1->isEmpty()); `
 
 with
 
-`
-$user2 = App\User:: find([100]);
-dump($user2->isEmpty());
-`
+`$user2 = App\User:: find([100]);`
+
+`dump($user2->isEmpty()); `
 
 The first one should error out on you - the result of $user1 is not a collection. In the second one I used a little trick to force the result to be a collection so we could see it work properly. This is one of the small "gotcha's" developers often come across when they first decide to start using the isEmpty() function. Eloquent will, by default, *not* return a single row result type as a collection (as of v5.1 - this is being discussed and always returning a collection is being considered, so watch this space).
 
 Why not just always use empty() and be safe? No reason, really. It's not "better" and doesn't have any obscure, under the hood differences. As a function of an object, you can occasionally do interesting things like a hand-rolled `contains()` function:
 
-`
-$users = App\User::all();    
-dump($users->where('first_name', 'Jeff')->isEmpty());
-`
+` $users = App\User::all();`
+
+`dump($users->where('first_name', 'Jeff')->isEmpty()); `
 
 But this is really just flexibility; there's no particular advantage I can think of for doing so in ordinary work.
 
@@ -51,17 +48,15 @@ If you need a full set of data, try:
 
 This is the equivalent method for `contains()`, in that you tell it the field of the multi-array you want and it will return *all* of those items. This works for a collection of models, of course, so:
 
-`
- $users = App\User::all();
- dump($users->pluck('last_name'));
-` 
+` $users = App\User::all();`
+
+`dump($users->pluck('last_name')); `
 
 Will give you a directory of last names. Signify the key you'd like with the second parameter:
 
-`
- $users = App\User::all();
- dump($users->pluck('last_name', 'id'));
-`
+`$users = App\User::all();`
+
+`dump($users->pluck('last_name', 'id'));`
 
 Because one of the most common tasks we have for working with result sets is to create dropdowns, we also have a specialized form of `pluck()` called `lists($value, $key = null)`. There is absolutely no difference - `lists()` merely calls `pluck()` internally. If anything, the reason this second function was created is just to spotlight it for you so you make a habit of using this syntax rather than using a `foreach` loop to specially build your dropdown data.
 
