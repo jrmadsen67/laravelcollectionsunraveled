@@ -6,38 +6,38 @@ Grouping:
 
 This is one of my favorites. Remember how you would query all the user types, then loop over them and gather each set of users so you could make nice reports with the proper heading? Forget all that: 
 
-`
+```php
 dump( collect([
     ['name' => 'Jeff', 'type' => 'programmer'],
     ['name' => 'Gerry', 'type' => 'designer'],
     ['name' => 'Joe', 'type' => 'programmer'],
 ])->groupBy('type') ); 
-`
+```
 
 Looping:
 
 `each(callable $callback)` - this works very much like the javascript version of its name. Instead of creating a loop with 
 
-`
+```php
 foreach ($collection as $item){
     // do something
 }
-`
+```
 
 we can call it in a more mapping fashion, including chaining:
 
-`
+```php
 collect([1, 12, 32, 14, 5])->sort()->each( function($item, $key){
     echo $item . '-';
 }); 
-`
+```
 
 Another interesting option is `every()`, which allows you to make a subset of the collection:
 
-`
+````php
 dump( collect([1,2,3,4,5])->every(2,1));
 // yields an array(2,4) 
-`
+```
 
 Pagination:
 
