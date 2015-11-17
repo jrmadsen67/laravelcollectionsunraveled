@@ -24,23 +24,20 @@ There's only so much you can demonstrate with sorting all by itself, so let me l
 
 Marketing is infamous for wanting custom sorts and displays. Imagine this array was full of item data and they wanted it to show up in a particular order on the page, say Bookcase, Desk, Chair...
 
-`
+```php
 $collection = collect([
 
-    ['name' => 'Desk'],
-    
+    ['name' => 'Desk'],    
     ['name' => 'Chair'],
-    
     ['name' => 'Bookcase'],
     
 ]);
-`
+```
 
 We could use the callback to sort it exactly as they wanted:
 
-`
+```php
 $sorted = $collection->sortBy(function ($product, $key) 
-
 {
 
     return array_search($product['name'], [1=>'Bookcase', 2=>'Desk', 3=>'Chair']);   
@@ -48,6 +45,6 @@ $sorted = $collection->sortBy(function ($product, $key)
 });
 
 dump($sorted->values()->all());
-`
+```
 
 Hopefully that tip was worth the price of admission. On to filters...
