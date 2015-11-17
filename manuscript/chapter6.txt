@@ -8,96 +8,96 @@ The first group we'll look at is what I call the "validation" filters. Not reall
 
 isEmpty() is a little bit interesting not so much for the function, which is just a wrapper around `empty($items)`, but for how it is and can be used. First, compare the following (using a User id that doesn't exist):
 
-```php
+`
 $user1 = App\User:: find(100);
 dump($user1->isEmpty());
-```
+`
 
 with
 
-```php
+`
 $user2 = App\User:: find([100]);
 dump($user2->isEmpty());
-```
+`
 
 The first one should error out on you - the result of $user1 is not a collection. In the second one I used a little trick to force the result to be a collection so we could see it work properly. This is one of the small "gotcha's" developers often come across when they first decide to start using the isEmpty() function. Eloquent will, by default, *not* return a single row result type as a collection (as of v5.1 - this is being discussed and always returning a collection is being considered, so watch this space).
 
 Why not just always use empty() and be safe? No reason, really. It's not "better" and doesn't have any obscure, under the hood differences. As a function of an object, you can occasionally do interesting things like a hand-rolled `contains()` function:
 
-```php
+`
 $users = App\User::all();    
 dump($users->where('first_name', 'Jeff')->isEmpty());
-```
+`
 
 But this is really just flexibility; there's no particular advantage I can think of for doing so in ordinary work.
 
-```has($key)```
+`has($key)`
 
 `has()` uses the internal `offsetExists` to determine if the key is there; it does *not* check it for emptiness. In other words, if the key `type` is set to null, or 0, it will still pass this method as true. Be careful! This is actually very different from the Request::has() function, which *does* check for emptiness and can even check for multiple keys' existence at once.
 
-```contains($key, $value = null)```
+`contains($key, $value = null)`
 
 `contains` looks for values, or key-value pairs. Again, though, it is only returning a boolean about whether or not the value is found, not how many or the records themselves. "Is there a user with first name of Fred?" This will tell us. You may also get more precise in your searches by creating a callback for it to use.
 
 That group is useful for checking for the existence of keys or values, but what about actually pulling them out and using them? Have no fear - this is one of the areas that Laravel Collections really shine!
 
-```get($key, $default = null)```
+`get($key, $default = null)`
 
 `get()` is the matching pair to `has()`, and also allows for a default value if not found (like you've seen on the Request object).
 
 If you need a full set of data, try:
 
-```pluck($value, $key = null)```
+`pluck($value, $key = null)`
 
 This is the equivalent method for `contains()`, in that you tell it the field of the multi-array you want and it will return *all* of those items. This works for a collection of models, of course, so:
 
-```php
+`
  $users = App\User::all();
  dump($users->pluck('last_name'));
-``` 
+` 
 
 Will give you a directory of last names. Signify the key you'd like with the second parameter:
 
-```php
+`
  $users = App\User::all();
  dump($users->pluck('last_name', 'id'));
-```
+`
 
 Because one of the most common tasks we have for working with result sets is to create dropdowns, we also have a specialized form of `pluck()` called `lists($value, $key = null)`. There is absolutely no difference - `lists()` merely calls `pluck()` internally. If anything, the reason this second function was created is just to spotlight it for you so you make a habit of using this syntax rather than using a `foreach` loop to specially build your dropdown data.
 
 While `pluck()` is nice for grabbing *all* the last names, sometimes you want the complete records but filtered on a certain name. In this case, try `where()` or `filter`.
 
-```php
+`
 $users = App\User::all();
 
 dump($users->where('first_name', 'Jeff'));
-```
+`
 
 is the same as:
 
-```php
+`
 dump(
     $users->filter(function($item){
         return ($item['first_name'] == 'Jeff');
     })
 );
-```
+`
 
 As you can see, `filter` offers us much more flexibility, whereas `where` gives us simplicity to remember and use. Because these are Collections, we can chain them together, such as:
 
-```php
+`
 $users = App\User::all();
 dump($users->where('first_name', 'Jeff')->where('active',1));
-```
+`
 
 Be careful! This *looks* very much like the Eloquent `where()` function - until you start trying things like `where('last_name', '!=', 'Madsen')` or `whereActive(1)`. You quickly realize this is an array_filter() function and you'll need to write `filter` callbacks for that.
 
 Speaking of `filter` callbacks - you may already know that `array_filter($array);` with no callback will simply filter out empty elements, but the Collection class' `filter` will do the same:
 
-```php
+`
 dump( collect([null, 2, 0, 6])->filter() );
 // Results: array(2, 6) 
-```
+`
 
 Be careful, though - notice that both the null and the possibly valid 0 elements are removed.
 
