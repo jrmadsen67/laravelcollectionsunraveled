@@ -8,13 +8,13 @@ We will limit how deeply we get into the Eloquent Collection class (perhaps a se
 
 Our first indication that something is different can be seen with the following experiment:
 
-`     
+```php    
 $users = App\User::all();
 dump($users->find(2));
 
 $users = collect(App\User::all());
 dump($users->find(2));
-` 
+```
 
 The first `dump()` finds the model we are searching for; the second throws an error since Illuminate\\Support\\Collection::find() doesn't exist. There is no great mystery behind this - Eloquent has its own set of functions and classes, and while we say that `App\User::all()` returns a collection, we really mean the Eloquent Collection subclass is being called. Confusing, though, if you are used to referring to everything as a "collection" without qualification.
 

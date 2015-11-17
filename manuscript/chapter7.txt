@@ -6,41 +6,38 @@ Grouping:
 
 This is one of my favorites. Remember how you would query all the user types, then loop over them and gather each set of users so you could make nice reports with the proper heading? Forget all that: 
 
-`dump( collect([
-
+```php
+dump( collect([
     ['name' => 'Jeff', 'type' => 'programmer'],
-
     ['name' => 'Gerry', 'type' => 'designer'],
-
     ['name' => 'Joe', 'type' => 'programmer'],
-
-])->groupBy('type') ); `
+])->groupBy('type') ); 
+```
 
 Looping:
 
 `each(callable $callback)` - this works very much like the javascript version of its name. Instead of creating a loop with 
 
-`foreach ($collection as $item){
-    
+```php
+foreach ($collection as $item){
     // do something
-    
-}`
+}
+```
 
 we can call it in a more mapping fashion, including chaining:
 
-`
+```php
 collect([1, 12, 32, 14, 5])->sort()->each( function($item, $key){
-
     echo $item . '-';
-
-}); `
+}); 
+```
 
 Another interesting option is `every()`, which allows you to make a subset of the collection:
 
-`dump( collect([1,2,3,4,5])->every(2,1) );`
-
-`yields an array(2,4) `
-
+```php
+dump( collect([1,2,3,4,5])->every(2,1));
+// yields an array(2,4) 
+```
 
 Pagination:
 
@@ -49,7 +46,6 @@ Laravel has a wonderful set of pagination functions that work with the QueryBuil
 `take($limit)` also uses array_slice(), but in a simpler form to simply bring back the requested number of items. Use a negative $limit to grab from the end.
 
 `forget($keys)` will simply `unset()` the keys from the original collection. If you need to preserve the original, be sure to call this on a copy.
-
 
 Transformation:
 

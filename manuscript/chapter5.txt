@@ -2,16 +2,15 @@
 
 This is short chapter, but I think it is good to pull these into their own group and investigate them a little bit. Most of this information is already in the documentation and well-explained, but it's a good opportunity to play with a few more examples to see what creative solutions we can come up with.
 
-`shuffle()`
+```shuffle()```
 
 Shuffle just randomizes your items. It will NOT maintain your keys, but unlike the PHP function, it returns a Collection rather than a boolean, which never made any sense anyway. 
 
-`sort(callable $callback = null)`
-
-`sortBy($callback, $options = SORT_REGULAR, $descending = false)`
-
-`sortByDesc($callback, $options = SORT_REGULAR)`
-
+```php
+sort(callable $callback = null)
+sortBy($callback, $options = SORT_REGULAR, $descending = false)
+sortByDesc($callback, $options = SORT_REGULAR)
+```
 
 To summarize, the differences we have among the three functions is that `sort()` works with a simple array object to sort on the first-level values, either in the default alphanumerical manner or according to the callback you pass in. A very small note about something that is incorrect in the current documentation - the internal sort uses `uasort()`, not `usort`, and so the keys *are maintained*. This is why in the example they show the results with `$collection->values()->all()`, which is all you need to do if you want a new array of the vlaues only. 
 
@@ -23,28 +22,23 @@ There's only so much you can demonstrate with sorting all by itself, so let me l
 
 Marketing is infamous for wanting custom sorts and displays. Imagine this array was full of item data and they wanted it to show up in a particular order on the page, say Bookcase, Desk, Chair...
 
-`$collection = collect([
-
+```php
+$collection = collect([
     ['name' => 'Desk'],
-
     ['name' => 'Chair'],
-
     ['name' => 'Bookcase'],
-    
-]);`
+]);
+```
 
 We could use the callback to sort it exactly as they wanted:
 
-`
+```php
 $sorted = $collection->sortBy(function ($product, $key) 
-
 {
-
-    return array_search($product['name'], [1=>'Bookcase', 2=>'Desk', 3=>'Chair']);
-    
+    return array_search($product['name'], [1=>'Bookcase', 2=>'Desk', 3=>'Chair']);   
 });
-`
 
-`dump($sorted->values()->all());`
+dump($sorted->values()->all());
+```
 
 Hopefully that tip was worth the price of admission. On to filters...

@@ -2,120 +2,89 @@
 
 I've nicknamed this group the "wrappers" because by and large, they imitate the similarly named functions that exist in the PHP language itself. All of these work internally with the `$items` array that is created when you instantiate the Collection, meaning that they can be strung together in a more readable fashion as `collect([])->someMethod()->someOtherMethod()`. 
 
-Another thing to note with all of the functions that work with finding or extracting certain keys is, they all tend to funnel through an object called Illuminate\\Support\\Arr, using its get() method. If you look at this method, you'll see that this is what lets us use dot notation to access our multi-dimensional array keys in ways you are already familiar:
+Another thing to note with all of the functions that work with finding or extracting certain keys is, they all tend to funnel through an object called `Illuminate\\Support\\Arr`, using its `get()` method. If you look at this method, you'll see that this is what lets us use dot notation to access our multi-dimensional array keys in ways you are already familiar:
 
-`$api_key= \Config::get('services.mandrill.secret');`
+```$api_key= \Config::get('services.mandrill.secret');```
 
 This is one of the reasons I enjoy working with Collections; after digging through it for a while and following the different Traits and Interfaces it uses, you start to see how so much of the Core ties together. If you spend enough time you'll see this thread run through the Request object, Eloquent and virtually everywhere else. What seems at first to be a giant codebase slowly condenses down to something much more easy to get your head around.
 
 Let's jump into the methods. Because these are "wrapper" functions, there is a long list of them that I really don't have many Laravel-specific comments to make. The goal here is simply to let you recognize that the functions exists on this class; later we will show some useful examples with many of them. However, there are a few that work a little bit differently than their PHP counterparts that are interesting to take a look at. For example:
 
-`implode($value, $glue = null)`
+```implode($value, $glue = null)```
 
 This can work in one of two ways. With normal array contents, the first param is the glue and everything functions as you would expect. But look what happens when you feed it an array of arrays or objects:
 
-`$collection = collect([
-
+```php
+$collection = collect([
     ['field1'=> 11],
-
     ['field2'=> 12],
-
     ['field1'=> 13],
-
     ['field2'=> 14],
-
     ['field1'=> 15]
+])->implode('field1');
 
-])->implode('field1');`
+dump($collection);
 
-`dump($collection);`
-
-`Result: "111315"`
+// Result: "111315"
+```
 
 The items are first *filtered* and then glued! You can do the same with your database results:
 
-`$users = App\User:: all();`
-`$collection = collect($users)->implode('first_name', '-');` 
+```php
+$users = App\User:: all();
+$collection = collect($users)->implode('first_name', '-');
 
-`Results: "Jeff-Joe-Gerry"`
+// Results: "Jeff-Joe-Gerry"
+```
 
 This simple tool means you can make one call to your data, then cleanly and easily rework it into different presentations. That may not be a big deal if you have full control over your datasource, but could be a Godsend if you need to make an expensive call to a restrictive api source.
 
 Likewise, these two functions are ones you might prefer to do in the query when you can, but when you can't, their callback ability can be wonderful. Look at these three ways to use `sum()`:
 
-`echo collect([1,3,5])->sum(); // Result: 9`
+```php
+echo collect([1,3,5])->sum(); // Result: 9
 
-`echo collect([
-
+echo collect([
     ['field1'=> 11],
-
     ['field2'=> 12],
-
     ['field1'=> 13],
-
     ['field2'=> 14],
-
     ['field1'=> 15]
+])->sum('field1');  // Result: 39
 
-])->sum('field1');  // Result: 39`
-
-`echo collect([
-
+echo collect([
     ['field1'=> 11],
-
     ['field2'=> 12],
-
     ['field1'=> 13],
-
     ['field2'=> 14],
-
     ['field1'=> 15]
-
-])->sum(function($field){
-
+])->sum(function($field) {
     if (isset($field['field2'])) return $field['field2'];
-    
-});  // Result: 26`
+});  // Result: 26
+```
 
 `max()`, `min()` and `avg()` all work the same way. Let me tell you how much I wish I had these back when I was creating sales and marketing reports! Try this yourself with the `search()` function, as well.
 
 The rest of this list holds no big surprises that I've noticed - they are generally just the array_* version of the native function, written in a clean, chainable fashion to use the internal $items. I'll include them for completeness sake; if you notice anything unusual, let me know and I'll add it in.
 
-`flip() - array_flip()`
-
-`keys() - array_keys()`
-
-`pop()  - array_pop()`
-
-`pull($key, $default = null) - Arr::pull()`
-
-`prepend($value) - array_unshift()`
-
-`reduce(callable $callback, $initial = null) - array_reduce()`
-
-`reverse() - array_reverse()`
-
-`shift() - array_shift()`
-
-`diff($items)` - array_diff()
-
-`slice($offset, $length = null, $preserveKeys = false) - array_slice()`
-
-`chunk($size, $preserveKeys = false) - array_chunk()`
-
-`splice($offset, $length = null, $replacement = []) - array_splice()`
-
-`map(callable $callback) - array_map()`
-
-`merge($items) - array_merge()`
-
-`intersect($items) - array_intersect()`
-
-`values() - array_values()`
-
-`count() - count()`
-
-`push($value) - uses $this->offsetSet(), but key is set to null so always adds to end of the Collection`
-
-`put($key, $value) - uses $this->offsetSet() , but key is passed so you can update or add to a particular place in the collection`
-
+```php
+flip() - array_flip()
+keys() - array_keys()
+pop()  - array_pop()
+pull($key, $default = null) - Arr::pull()
+prepend($value) - array_unshift()
+reduce(callable $callback, $initial = null) - array_reduce()
+reverse() - array_reverse()
+shift() - array_shift()
+diff($items) - array_diff()
+slice($offset, $length = null, $preserveKeys = false) - array_slice()
+chunk($size, $preserveKeys = false) - array_chunk()
+splice($offset, $length = null, $replacement = []) - array_splice()
+map(callable $callback) - array_map()
+merge($items) - array_merge()
+intersect($items) - array_intersect()
+values() - array_values()
+count() - count()
+push($value) - uses $this->offsetSet(), but key is set to null so always adds to end of the Collection
+put($key, $value) - uses $this->offsetSet() , but key is passed so you can update or add to a particular place in the collection
+```

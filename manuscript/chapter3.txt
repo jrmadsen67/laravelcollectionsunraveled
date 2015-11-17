@@ -10,22 +10,22 @@ Used to format, transform or otherwise manipulate the structure of the $items ar
 
 We won't linger for long over these functions, but I thought it was a good opportunty to point out something you'll notice a lot in the source and might wonder about. Have a look at the actual function `toJson($options = 0)`:
 
-`    
+```php   
 public function toJson($options = 0)
 {
     return json_encode($this->toArray(), $options);
-}`
+}
+```
 
 It's true that this function actual handles two things, first converting to an array and then applying the php fumction json_encode(). A few of the functions don't even do that much - they are simple wrappers around php core functions. Why do that?
 
 Chaining! Laravel is not just about RAD, it is about working in a clean, easy to read and work with manner..."eloquent", if you will. You'll notice a very heavy influence from Ruby on Rails when you work with it for a while. Php loves to wrap functions inside of function inside of functions. Laravel would prefer this:
 
-`$collection= collect([11,12,13,14,15])->shuffle()->toJson();`
+```$collection= collect([11,12,13,14,15])->shuffle()->toJson();```
 
 You can read it, left to right, like a book. Nice, don't you agree?
 
 Looking at our interator functions, we have 
-
 
 `getIterator()` - Converts the Collection to an ArrayIterator
 
