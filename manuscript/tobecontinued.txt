@@ -1,0 +1,7 @@
+# To be Continued...
+
+Yes, to be continued. New versions of Laravel will come out; new uses will be found for this material. I hope this was worth the read, and that it has piqued your interest to explore!
+
+Thank you very much for reading.
+
+Jeff Madsen
