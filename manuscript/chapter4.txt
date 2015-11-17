@@ -14,7 +14,7 @@ Let's jump into the methods. Because these are "wrapper" functions, there is a l
 
 This can work in one of two ways. With normal array contents, the first param is the glue and everything functions as you would expect. But look what happens when you feed it an array of arrays or objects:
 
-`
+```php
 $collection = collect([
 
     ['field1'=> 11],
@@ -32,7 +32,7 @@ $collection = collect([
 dump($collection);
 
 // Result: "111315"
-`
+```
 
 The items are first *filtered* and then glued! You can do the same with your database results:
 
