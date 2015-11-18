@@ -17,7 +17,7 @@ public function toJson($options = 0)
 }
 `
 
-It's true that this function actual handles two things, first converting to an array and then applying the php fumction json_encode(). A few of the functions don't even do that much - they are simple wrappers around php core functions. Why do that?
+It's true that this function actual handles two things, first converting to an array and then applying the php function json_encode(). A few of the functions don't even do that much - they are simple wrappers around php core functions. Why do that?
 
 Chaining! Laravel is not just about RAD, it is about working in a clean, easy to read and work with manner..."eloquent", if you will. You'll notice a very heavy influence from Ruby on Rails when you work with it for a while. Php loves to wrap functions inside of function inside of functions. Laravel would prefer this:
 
