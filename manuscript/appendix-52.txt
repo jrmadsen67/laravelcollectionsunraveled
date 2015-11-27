@@ -1,0 +1,67 @@
+Laravel 5.2 is coming out in December (2015) and there are a lot of nice new features to be excited about. Collections are no exception - there are several new functions I think you will really appreciate.
+
+The first two are "borrowed" from the Request and Eloquent Collection objects. I say "borrowed" in quotes because really these two are based on the Arr class and have just been given wrapper functions on the Support\Collection. They are mirror images of each other:
+
+```php
+except()
+
+Ex. - $arr = Collection(['name' => 'Jeff', 'twitter' => 'codebyjeff']);
+
+dump( $arr->except('name') );    
+
+// result: array{ 'twitter' => 'codebyjeff' }
+
+only()
+
+dump( $arr->except('twitter') );    
+
+// result: array{ 'twitter' => 'codebyjeff' }
+```
+
+A small change has been made to prepend() so that you can give it a key as well as a value, such as (taken from the <a href="https://github.com/laravel/framework/blob/5.2/tests/Support/SupportCollectionTest.php">tests</a>, which is an excellent way to study these!):
+
+```php
+$c = new Collection(['one' => 1, 'two' => 2]);
+
+$this->assertEquals(['zero' => 0, 'one' => 1, 'two' => 2], $c->prepend(0, 'zero')->all());    
+```
+
+Just remember it is $value, $key and not the other way around like you'd think with an array.
+
+Function flatMap() combines mapping with the flatten() function, allowing you to write essentially a custom callback to retrieve nested arrays, then collapse them into a single dimensional array. This might be used, for example, to look through all of the users' choices and return a list of them.
+
+```php
+$data = new Collection([
+    ['name' => 'taylor', 'hobbies' => ['programming', 'basketball']],
+    ['name' => 'adam', 'hobbies' => ['music', 'powerlifting']],
+]);
+
+// this callback simply returns the 'hobbies', but could do anything you might do in an array_map
+
+$data = $data->flatMap( function ($person) { 
+    return $person['hobbies']; }
+);
+
+$this->assertEquals(['programming', 'basketball', 'music', 'powerlifting'], $data->all());    
+```
+
+Finally, one of the simplest yet potentially most interesting is macroable(). Simple, because it only requires the addition of the Trait Macroable; potentially most useful because it allows you to create your own Collection-level scopes, putting together any chained collection functions along with any other business logic you may wish to add.
+
+```php
+// Foo() macro : unique values starting with A
+
+Collection::macro('foo', function () {
+
+    return $this->filter(function ($item) {
+            return strpos($item, 'a') === 0;
+        })
+        ->unique()
+        ->values();
+});
+
+$c = new Collection(['a', 'a', 'aa', 'aaa', 'bar']);
+
+$this->assertSame(['a', 'aa', 'aaa'], $c->foo()->all());    
+```
+
+When I read this, the first thing that came to mind was stored procedures or business intelligence objects to encapsulate business logic for the other developers to make use of. I'm interested in seeing examples of how people are using it - go ahead and grab a copy of 5.2 dev and let me know your ideas!
