@@ -5,5 +5,7 @@ Yes, to be continued. New versions of Laravel will come out; new uses will be fo
 Thank you very much for reading.
 
 Jeff Madsen
+
 [Codebyjeff](http://codebyjeff.com)
+
 [@codebyjeff](https://twitter.com/codebyjeff)
