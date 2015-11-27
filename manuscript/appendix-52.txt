@@ -22,7 +22,7 @@ dump( $arr->except('twitter') );
 // result: array{ 'twitter' => 'codebyjeff' }
 ```
 
-A small change has been made to prepend() so that you can give it a key as well as a value, such as (taken from the <a href="https://github.com/laravel/framework/blob/5.2/tests/Support/SupportCollectionTest.php">tests</a>, which is an excellent way to study these!):
+A small change has been made to prepend() so that you can give it a key as well as a value, such as (taken from the [test](https://github.com/laravel/framework/blob/5.2/tests/Support/SupportCollectionTest.php), which is an excellent way to study these!):
 
 ```php
 $c = new Collection(['one' => 1, 'two' => 2]);
