@@ -1,18 +1,22 @@
+#Appendix - Laravel 5.2 changes
+
 Laravel 5.2 is coming out in December (2015) and there are a lot of nice new features to be excited about. Collections are no exception - there are several new functions I think you will really appreciate.
 
 The first two are "borrowed" from the Request and Eloquent Collection objects. I say "borrowed" in quotes because really these two are based on the Arr class and have just been given wrapper functions on the Support\Collection. They are mirror images of each other:
 
-```php
-except()
+`except()`
 
+```php
 Ex. - $arr = Collection(['name' => 'Jeff', 'twitter' => 'codebyjeff']);
 
 dump( $arr->except('name') );    
 
 // result: array{ 'twitter' => 'codebyjeff' }
+```
 
-only()
+`only()`
 
+```php
 dump( $arr->except('twitter') );    
 
 // result: array{ 'twitter' => 'codebyjeff' }
