@@ -17,7 +17,7 @@ dump( $arr->except('name') );
 `only()`
 
 ```php
-dump( $arr->except('twitter') );    
+dump( $arr->only('twitter') );    
 
 // result: array{ 'twitter' => 'codebyjeff' }
 ```
