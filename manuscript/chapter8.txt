@@ -4,7 +4,7 @@ Working through these examples you're sure to have noticed a lot of familiar met
 
 The Eloquent Collection, on the other hand, is a directly inherited class. All of the methods reviewed in this book are available, although a few have been overridden to function slightly differently, as well as some others added that are only available in the child class. To be honest, this can make things rather confusing at times.
 
-We will limit how deeply we get into the Eloquent Collection class (perhaps a second edition of this book will spend more time here), but there are some areas we definitely want to visit if we are going to to fully master Collections.
+We will limit how deeply we get into the Eloquent Collection class (perhaps a second edition of this book will spend more time here), but there are some areas we definitely want to visit if we are going to fully master Collections.
 
 Our first indication that something is different can be seen with the following experiment:
 

@@ -40,7 +40,8 @@ $data = new Collection([
     ['name' => 'adam', 'hobbies' => ['music', 'powerlifting']],
 ]);
 
-// this callback simply returns the 'hobbies', but could do anything you might do in an array_map
+// this callback simply returns the 'hobbies', but could do anything 
+// you might do in an array_map
 
 $data = $data->flatMap( function ($person) { 
     return $person['hobbies']; }

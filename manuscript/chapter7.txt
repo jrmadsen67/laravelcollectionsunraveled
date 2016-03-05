@@ -41,9 +41,9 @@ dump( collect([1,2,3,4,5])->every(2,1));
 
 Pagination:
 
-Laravel has a wonderful set of pagination functions that work with the QueryBuilder and Eloquent. That said, there are times when you may wish to use Illuminate\\Pagination\\Paginator to create your own paginator. Most likely you will still want to add limits and offsets to your query, but occasionally you may prefer to cache a complex resultset and slice it. `forPage($page, $perPage)` use array_slice() but helps you by automatically calculating the lenths and offsets so you can just work with clean code. 
+Laravel has a wonderful set of pagination functions that work with the QueryBuilder and Eloquent. That said, there are times when you may wish to use Illuminate\\Pagination\\Paginator to create your own paginator. Most likely you will still want to add limits and offsets to your query, but occasionally you may prefer to cache a complex resultset and slice it. `forPage($page, $perPage)` uses array_slice() but helps you by automatically calculating the lenths and offsets so you can just work with clean code. 
 
-`take($limit)` also uses array_slice(), but in a simpler form to simply bring back the requested number of items. Use a negative $limit to grab from the end.
+`take($limit)` also uses array_slice(), but in a simpler form to bring back the requested number of items. Use a negative $limit to grab from the end.
 
 `forget($keys)` will simply `unset()` the keys from the original collection. If you need to preserve the original, be sure to call this on a copy.
 
@@ -53,7 +53,7 @@ These functions are for "brute force" collection of all the values present, whet
 
 `collapse()` - turns a collection of arrays into a single collection of all values.
 
-`flatten()` - like `collapse()`, but works on multi-dimensional coleections.
+`flatten()` - like `collapse()`, but works on multi-dimensional collections.
 
 `zip($items)` - will array merge on keys; i.e., 
 
@@ -61,4 +61,4 @@ These functions are for "brute force" collection of all the values present, whet
 
 `Results: array( array(1,4), array(2,5), array(3,6) ) `
 
-`transform(callable $callback)` - this is just like `map()`, with the diffeence being that `map()` returns a new collection with the callback results, but `transform()` actually applies them to the original collection.
+`transform(callable $callback)` - this is just like `map()`, with the difference being that `map()` returns a new collection with the callback results, but `transform()` actually applies them to the original collection.

@@ -100,7 +100,7 @@ Let's end with a few lesser known functions that might be "just the thing" some 
 
 `reject($callback)` is simply a `filter()` that returns a set of excluded values. Handy tool for finding outliers for marketing reports, or suspicious user agents.
 
-`unique($key = null)` does what it says for simple arrays, but careful with more complex objects. On a multi-dimensional array, or example, it will essentially "group by" each unique value, taking the *first* value of the other rows. 
+`unique($key = null)` does what it says for simple arrays, but careful with more complex objects. On a multi-dimensional array, for example, it will essentially "group by" each unique value, taking the *first* value of the other rows. 
 
 `keyBy($keyBy)` - allows you to pull out one set of data from your items and make that the key. 
 
