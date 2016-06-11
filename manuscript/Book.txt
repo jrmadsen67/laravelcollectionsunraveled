@@ -8,4 +8,5 @@ chapter6.txt
 chapter7.txt
 chapter8.txt
 appendix-52.txt
+appendix-53.txt
 tobecontinued.txt

@@ -1,0 +1,96 @@
+#Appendix - Laravel 5.3 changes
+
+Laravel 5.3 should be out in a few weeks (June 2016) and there are a couple of new functions and several changes you should know about.
+
+First, three new functions:
+
+`diffKeys()`: A wrapper around `array_diff_key`. Get the items in the main collection whose keys are not present in the second one. Notice we are talking about *keys*, not values (which can be found with the already existing `diff()`). For example:
+
+```
+$collection1 = collect([1 => 'red', 2 => 'green', 3 => 'blue', 4 => 'orange']);
+$collection2 = collect([2 => 'red', 3 => 'pink']);
+
+dump($collection1->diffKeys($collection2));
+
+// result: array:2 [▼
+    1 => "red"
+    4 => "orange"
+  ]
+```
+
+ How might this be used? If you recall the `getDictionary()` function on the Eloquent/Collection, this will set up an array of models where the keys are the models' primary keys. `diffKeys()` would then let you quickly and easily compare two result sets from your data source.
+
+
+`union()`: Union simply concatenates the two collections, giving preference to the parent when there is a conflict.
+
+```
+$collection1 = collect([1 => 'red', 2 => 'green', 3 => 'blue', 4 => 'orange']);
+$collection2 = collect([2 => 'red', 3 => 'pink']);
+
+dump($collection1->diffKeys($collection2));
+
+// result: array:4 [▼
+    1 => "red"
+    2 => "green"
+    3 => "blue"
+    4 => "orange"
+  ]
+```
+
+You can see that since both collections have the keys 2 and 3, the values of $collection1 are maintained. Essentially all this is doing under the hood is to use the array forms of the two collections so they can be concatenated normally. Identical to:
+
+`dump($collection1->toArray() + $collection2->toArray());`
+
+`combine()`: A wrapper for the `array_combine` combine function that uses the values of the parent collection as keys and the second collection as values. As expected, thee are a few things to watch for:
+
+1) If both collections do not have the same number of elements, an exception is thrown.
+
+2) If the parent collection is a set of Models, each will be json encoded to create a string for the key, with the matching model from the second collection as the value:
+
+```
+$user1 = \App\User::find([1]);
+$user2 = \App\User::find([2]);
+
+dump($user1->combine($user2));
+
+//result:
+array:1 [▼
+    "{"id":1,"name":"Jeff","email":"jrmadsen67@gmail.com", ...}" => User {#157 ▶}
+  ]
+```
+
+The next set of changes all center around `where` and its variations - `whereLoose`, `whereIn`, and `whereInLoose`.
+
+The biggest of these is `where`; instead of the fixed `where($key, $value)` where only "=" can be used, it has been changed to:
+
+`where($key, $operator, $value = null)`
+
+Fear not! All of your old code has not been broken. The function has been "monkey-patched" so that if only two arguments are given, it will continue to work as is, but if three are used it will assume the new, more flexible format. There is a function called `operatorForWhere()` that shows you all of the accepted $operator values.
+
+In addition:
+
+1) `whereIn` now uses loose comparisons by default; there is a new `whereInStrict`
+
+2) `whereIn` will accept any arrayable objects, not just arrays, as the second argument
+
+
+Finally, there is a small change to the `keyBy()` function when passing closures, which now works with both the key and value, such as in this test:
+
+```
+public function testKeyByClosure()
+{
+    $data = new Collection([
+        ['firstname' => 'Taylor', 'lastname' => 'Otwell', 'locale' => 'US'],
+        ['firstname' => 'Lucas', 'lastname' => 'Michot', 'locale' => 'FR'],
+    ]);
+    $result = $data->keyBy(function ($item, $key) {
+        return strtolower($key.'-'.$item['firstname'].$item['lastname']);
+    });
+    $this->assertEquals([
+        '0-taylorotwell' => ['firstname' => 'Taylor', 'lastname' => 'Otwell', 'locale' => 'US'],
+        '1-lucasmichot'  => ['firstname' => 'Lucas', 'lastname' => 'Michot', 'locale' => 'FR'],
+    ], $result->all());
+}
+```
+
+As always, interested in hearing how you put these changes to use!
