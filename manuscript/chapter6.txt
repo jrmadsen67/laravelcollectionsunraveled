@@ -58,7 +58,7 @@ Will give you a directory of last names. Signify the key you'd like with the sec
 
 `dump($users->pluck('last_name', 'id'));`
 
-Because one of the most common tasks we have for working with result sets is to create dropdowns, we also have a specialized form of `pluck()` called `lists($value, $key = null)`. There is absolutely no difference - `lists()` merely calls `pluck()` internally. If anything, the reason this second function was created is just to spotlight it for you so you make a habit of using this syntax rather than using a `foreach` loop to specially build your dropdown data.
+Because one of the most common tasks we have for working with result sets is to create dropdowns, we also have a specialized form of `pluck()` called `lists($value, $key = null)`. (NOTE: `lists` has been deprecated as of 5.2. It is still available in 5.3, but expect it to disappear soon.) There is absolutely no difference - `lists()` merely calls `pluck()` internally. If anything, the reason this second function was created is just to spotlight it for you so you make a habit of using this syntax rather than using a `foreach` loop to specially build your dropdown data.
 
 While `pluck()` is nice for grabbing *all* the last names, sometimes you want the complete records but filtered on a certain name. In this case, try `where()` or `filter`.
 
@@ -91,7 +91,7 @@ Speaking of `filter` callbacks - you may already know that `array_filter($array)
 
 `
 dump( collect([null, 2, 0, 6])->filter() );
-// Results: array(2, 6) 
+// Results: array(2, 6)
 `
 
 Be careful, though - notice that both the null and the possibly valid 0 elements are removed.
@@ -100,9 +100,9 @@ Let's end with a few lesser known functions that might be "just the thing" some 
 
 `reject($callback)` is simply a `filter()` that returns a set of excluded values. Handy tool for finding outliers for marketing reports, or suspicious user agents.
 
-`unique($key = null)` does what it says for simple arrays, but careful with more complex objects. On a multi-dimensional array, for example, it will essentially "group by" each unique value, taking the *first* value of the other rows. 
+`unique($key = null)` does what it says for simple arrays, but careful with more complex objects. On a multi-dimensional array, for example, it will essentially "group by" each unique value, taking the *first* value of the other rows.
 
-`keyBy($keyBy)` - allows you to pull out one set of data from your items and make that the key. 
+`keyBy($keyBy)` - allows you to pull out one set of data from your items and make that the key.
 
 `random($amount = 1)` - grab a random element or collection of elements (if more than one is asked for)
 
