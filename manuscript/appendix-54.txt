@@ -1,0 +1,49 @@
+#Appendix - Laravel 5.4 changes
+
+Laravel 5.4 is on the verge of being released (Jan 2017), so all of the community’s package maintainers and bloggers are busy getting their ducks in a row. To paraphrase Taylor, 5.4 is a bit more focused on “housecleaning” than any major announcements, and the changes to Collections are equally simple. As always, though, there are a few nice additions to know about.
+
+There is a breaking change you want to be aware of with the every() function. What was previously “every nth item” is now called, fittingly, nth() . The every() function is now used to check that every item in the collection passes a given truth test.
+
+The random() function will now return a Collection even if only a single item returned. This is consistent with the upgrade from 5.2 > 5.3, but you’ll want to be sure you are always expecting a Collection class and never a single model.
+
+There are a couple of new functions, as well. ContainsStrict() works just like the contains() function to see if an item is found in the collection, but uses strict comparison.
+
+Split() is similar to chunk() and (in fact, relies on it internally) but instead of telling it the size of the groups you want returned, you tell it how many groups. Be careful as the last group may be smaller than the others.
+
+MapWithKeys() allows you to return an associative array from your mapping, so you can now pull two items from a record and set up on of them as the key in the return value. The docs explain that better, so let me borrow here:
+
+```
+$collection = collect([
+    [
+        'name' => 'John',
+        'department' => 'Sales',
+        'email' => 'john@example.com'
+    ],
+    [
+        'name' => 'Jane',
+        'department' => 'Marketing',
+        'email' => 'jane@example.com'
+    ]
+]);
+
+$keyed = $collection->mapWithKeys(function ($item) {
+    return [$item['email'] => $item['name']];
+});
+
+$keyed->all();
+
+/*
+    [
+        'john@example.com' => 'John',
+        'jane@example.com' => 'Jane',
+    ]
+*/
+```
+
+Some of you might recall the calisthenics Adam Wathan had to jump through to set this up in his Refactoring to Collections book.
+
+Finally, a small but helpful isNotEmpty(). As you suspect, it is just a wrapper around return ! $this->isEmpty(); but giving it its own function should help make a little cleaner code in some of your callbacks, etc.
+
+That covers most of the significant stuff. You can look through the commit list to get all the specific details, and the docs are actually already up although possibly still being finalized.
+
+Hope that helps!
