@@ -25,7 +25,7 @@ Chaining! Laravel is not just about RAD, it is about working in a clean, easy to
 
 You can read it, left to right, like a book. Nice, don't you agree?
 
-Looking at our interator functions, we have 
+Looking at our iterator functions, we have 
 
 `getIterator()` - Converts the Collection to an ArrayIterator
 
