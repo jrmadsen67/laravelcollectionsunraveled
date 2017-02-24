@@ -12,7 +12,7 @@ $operatingSystems = [
 ];
 ```
 
-Suppose you need to filter the greatest operation system, previously you would do something like this:
+Suppose you need to filter the greatest operating system, previously you would do something like this:
 
 ```php
 $collection = collect($operatingSystems);
