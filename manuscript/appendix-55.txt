@@ -1,0 +1,55 @@
+#Appendix - Laravel 5.5 changes
+
+Starting from v5.4.12, Laravel Collections include a "when" method that allows you to perform conditional actions on the items in a fluent readble way. Let's look at an example to understand better than we will look what actually happens behind the scenes.
+
+So, for example let's assume we have a list of smartphone operating systems:
+
+```php
+$operatingSystems = [
+	['name' => 'Android', 'is_great' => 1],
+	['name' => 'ios', 'is_great' => 0],
+	['name' => 'windows', 'is_great' => 0]
+];
+```
+
+Suppose you need to filter the greatest operation system, previously you would do something like this:
+
+```php
+$collection = collect($operatingSystems);
+
+if (request('greatest')) {
+    $collection = $collection->filter(function($os) {
+        return ! $os['is_great'];
+    });
+}
+```
+
+Now, with the "when" method you can do this in a more readable way and chain if required as follows:
+
+```php
+$collection = collect($operatingSystems)
+		    ->when(request('greatest'), function($collection) {
+		        return $collection->filter(function($os){
+		            return ! $os['is_great'];
+		        });
+		    });
+```
+
+Neat & flexible right? Just like the greatest smartphone OS of all time! 
+
+Now let's look what's exactly going on behind the scenes. Well to be true there's nothing much going on, have a look at the source:
+
+```php
+public function when($value, callable $callback, callable $default = null)
+	{
+	    if ($value) {
+	        return $callback($this);
+	    } elseif ($default) {
+	        return $default($this);
+	    }
+
+	    return $this;
+	}
+```
+
+You pass 2 params, first is the condition, if that condition holds to be true the second param that is the callback function you defined is executed. You might be thinking that was the exact same thing we were doing before the "when" method. Yes you are correct, but by adding this "when" method in the Collection class it gives us a readble line of code and chaining to the already available other collection methods. Neat isn't it? Hope this helps.
