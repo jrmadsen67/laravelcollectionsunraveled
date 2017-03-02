@@ -1,6 +1,6 @@
 #Appendix - Laravel 5.5 changes
 
-Starting from v5.4.12, Laravel Collections include a "when" method that allows you to perform conditional actions on the items in a fluent readble way. Let's look at an example to understand better than we will look what actually happens behind the scenes.
+Starting from v5.4.12, Laravel Collections include a "when" method that allows you to perform conditional actions on the items in a fluent readble way. Let's look at an example to understand this better and then we will look at what actually happens behind the scenes.
 
 So, for example let's assume we have a list of smartphone operating systems:
 
@@ -12,7 +12,7 @@ $operatingSystems = [
 ];
 ```
 
-Suppose you need to filter the greatest operating system, previously you would do something like this:
+Suppose you need to filter on only "great" operating systems. Previously you would do something like this:
 
 ```php
 $collection = collect($operatingSystems);
@@ -37,7 +37,7 @@ $collection = collect($operatingSystems)
 
 Neat & flexible right? Just like the greatest smartphone OS of all time! 
 
-Now let's look what's exactly going on behind the scenes. Well to be true there's nothing much going on, have a look at the source:
+Now let's look at what's exactly going on behind the scenes. Well, to be honest, there's nothing much going on - have a look at the source:
 
 ```php
 public function when($value, callable $callback, callable $default = null)
@@ -52,4 +52,4 @@ public function when($value, callable $callback, callable $default = null)
 	}
 ```
 
-You pass 2 params, first is the condition, if that condition holds to be true the second param that is the callback function you defined is executed. You might be thinking that was the exact same thing we were doing before the "when" method. Yes you are correct, but by adding this "when" method in the Collection class it gives us a readble line of code and chaining to the already available other collection methods. Neat isn't it? Hope this helps.
+You pass 2 params. The first is the condition; if that condition holds true then the second param that is the callback function you defined is executed. You might be thinking that was the exact same thing we were doing before the "when" method. Yes, you are correct, but by adding this "when" method in the Collection class it gives us a readble line of code and chaining to the already available other collection methods. Neat isn't it? Hope this helps.
