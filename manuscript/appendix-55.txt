@@ -53,3 +53,37 @@ public function when($value, callable $callback, callable $default = null)
 ```
 
 You pass 2 params. The first is the condition; if that condition holds true then the second param that is the callback function you defined is executed. You might be thinking that was the exact same thing we were doing before the "when" method. Yes, you are correct, but by adding this "when" method in the Collection class it gives us a readble line of code and chaining to the already available other collection methods. Neat isn't it? Hope this helps.
+
+From Laravel v5.4.17, Collections also include a new **static** method called `times()` to create a new collection by invoking the callback passed to this method the given number of times. _Wait! What? How?_ I know this is a bit overwhelming, especially if you are just beginning with Laravel. Let's answer 1 question at a time and then look at what actually happens behind the scenes.
+
+The WHAT?
+- Suppose you needed to convert your data into a collection so that you could use the rich set of helpers Laravel provides to work with collections. What would you do? Well, how I have usually done it myself in the past is to convert the data into a PHP array first by executing some logic in a function to structure the array. Then, I passed that array to Laravel's `collect()` helper method to make it a collection. Now with the new `times()` method I could do that all together in a single action.
+
+The HOW?
+- The `times()` method accepts 2 arguments. First: Number of times, Second: The callback function that you want to execute that many number of times. Let's see it in action: 
+
+```php
+$myCollection = Collection::times(10, function ($number) {
+    return $number * 9;
+});
+
+$myCollection->all();
+
+// [9, 18, 27, 36, 45, 54, 63, 72, 81, 90]
+```
+
+Behind the scenes
+- The source looks as follows:
+
+```php
+public static function times($amount, callable $callback)
+{
+    if ($amount < 1) {
+        return new static;
+    }
+
+    return (new static(range(1, $amount)))->map($callback);
+}
+```
+
+- The `if` loop checks if the first argument that is the number of times is 0 or a negative number. A negative number doesn't makes sense but if you pass 0, you would expect it to execute zero times. So in that case it would just return you a blank instance of the Collection class. Next, if the number is greater than 1, a new collection instance is created and, using the PHP's `range` function, the callback you passed is mapped over that number of times to create a new collection. The `map` method is already been covered in detail in this book [here](). 
